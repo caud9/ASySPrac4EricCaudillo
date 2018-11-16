@@ -1,0 +1,392 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>RPL04 Convoluci&oacute;n y correlaci&oacute;n de se&ntilde;ales en tiempo continuo.</title><meta name="generator" content="MATLAB 8.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-16"><meta name="DC.source" content="Part1PR04.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>RPL04 Convoluci&oacute;n y correlaci&oacute;n de se&ntilde;ales en tiempo continuo.</h1><!--introduction--><p>Caudillo Barbosa Eric Olea Garc&iacute;a Bryan Dar&iacute;o</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Introducci&oacute;n.</a></li><li><a href="#2">Resoluci&oacute;n del PR04.</a></li><li><a href="#12">Resoluci&oacute;n del PR05.</a></li><li><a href="#21">Convoluci&oacute;n discreta Lathi 3.1.1</a></li><li><a href="#23">Correlaci&oacute;n discreta Lathi 3.1.1</a></li><li><a href="#28">Convoluci&oacute;n con CONV de Matlab.</a></li></ul></div><h2>Introducci&oacute;n.<a name="1"></a></h2><p>DESCRIPTIVE TEXT</p><h2>Resoluci&oacute;n del PR04.<a name="2"></a></h2><p>A continuaci&oacute;n se analiza el problema 1. del PR04. Se realiza la convoluci&oacute;n de la se&ntilde;al:</p><p><img vspace="5" hspace="5" src="ft.PNG" alt=""> </p><pre>con la se&ntilde;al:</pre><p><img vspace="5" hspace="5" src="gt.PNG" alt=""> </p><pre>Se muestra la gr&aacute;fica de la convoluci&oacute;n num&eacute;rica con la funci&oacute;n
+"convconm", se modific&oacute; con el fin de poder modificar los l&iacute;mites, los
+intervalos de integraci&oacute;n y agregar una funci&oacute;n para el resultado
+anal&iacute;tico.</pre><pre>El resultado num&eacute;rico se muestra con un color negro y el resultado
+anal&iacute;tico se muestra de un color rojo.</pre><pre class="codeinput">clear <span class="string">all</span>;
+close <span class="string">all</span>;
+clc;
+
+f = @(t) exp(-t).*(t&gt;=0 &amp; t&lt;=1);
+g = @(t) t.*(t&gt;=-1 &amp; t&lt;=1);
+
+dtau = 5e-3;
+tau = -2:dtau:5;
+tvec = -1.5:.1:2.5;
+lims = [-1.5 1.5;-1 1];
+
+res04 = @(t) 0.*(t&lt;-1 &amp; t&gt;2) + (2*exp(-t-1) + t -1).*(t&gt;=-1 &amp; t&lt;0) + <span class="keyword">...</span>
+    ((2-t)*exp(-1) + t -1).*(t&gt;=0 &amp; t&lt;1) + ((2-t)*exp(-1)).*(t&gt;=1 &amp; t&lt;=2);
+
+convconm(g,f,res04,tau,dtau,tvec,lims);
+</pre><img vspace="5" hspace="5" src="Part1PR04_01.png" alt=""> <p><img vspace="5" hspace="5" src="yt.PNG" alt=""> </p><pre>Para poder notar las diferencias entre el resultado num&eacute;rico y
+anal&iacute;tico, se realiza un aumento en la secci&oacute;n marcada.</pre><p><img vspace="5" hspace="5" src="am1pr04.PNG" alt=""> </p><p><img vspace="5" hspace="5" src="am2pr04.PNG" alt=""> </p><h2>Resoluci&oacute;n del PR05.<a name="12"></a></h2><p>A continuaci&oacute;n se analiza el problema e) del PR05. Se realiza la autocorrelaci&oacute;n de la se&ntilde;al:</p><p><img vspace="5" hspace="5" src="x1t.PNG" alt=""> </p><pre>Conocemos la propiedad de la convoluci&oacute;n para resolver correlaciones,
+y tenemos una funci&oacute;n que nos ayuda a resolver convoluciones, as&iacute; que
+podemos resolver el problema por la siguente ecuaci&oacute;n:</pre><p><img vspace="5" hspace="5" src="rx1t.PNG" alt=""> </p><pre>El resultado num&eacute;rico se muestra con un color negro y el resultado
+anal&iacute;tico se muestra de un color rojo.</pre><pre class="codeinput">x1 = @(t) 0.*(t&lt;0) + 1.*(t&gt;=0) - 2.*(t&gt;=3) + 1.*(t&gt;=4);
+x11 = @(t) 0.*(t&lt;0) - 1.*(t&gt;=0) + 2.*(t&gt;=-3) - 1.*(t&gt;=-4);
+
+dtau = 1e-2;
+tau = -6:dtau:8;
+tvec = -5:.1:5;
+lims = [-1.5 1.5;-1.5 4.5];
+
+res05 = @(t) 0.*(t&lt;-4 &amp; t&gt;4) + (-t-4).*(t&gt;=-4 &amp; t&lt;=-3) + (t+2).*(t&gt;-3 &amp; t&lt;=-1)<span class="keyword">...</span>
+    + (3*t + 4).*(t&gt;-1 &amp; t&lt;=0) + (-3*t + 4).*(t&gt;0 &amp; t&lt;=1) + (-t + 2).*(t&gt;1 &amp; t&lt;=3)<span class="keyword">...</span>
+    + (t-4).*(t&gt;3 &amp; t&lt;=4);
+
+figure;
+
+convconm(x11,x1,res05,tau,dtau,tvec,lims);
+</pre><img vspace="5" hspace="5" src="Part1PR04_02.png" alt=""> <p><img vspace="5" hspace="5" src="rx1x1.PNG" alt=""> </p><pre>Para poder notar las diferencias entre el resultado num&eacute;rico y
+anal&iacute;tico, se realiza un aumento en la secci&oacute;n marcada.</pre><p><img vspace="5" hspace="5" src="am1pr05.PNG" alt=""> </p><p><img vspace="5" hspace="5" src="am2pr05.PNG" alt=""> </p><h2>Convoluci&oacute;n discreta Lathi 3.1.1<a name="21"></a></h2><p>A continuaci&oacute;n se analiza el problema 3.1.1 Se realiza la convoluci&oacute;n de dos se&ntilde;ales discretas.</p><p><img vspace="5" hspace="5" src="eqd.PNG" alt=""> </p><pre class="codeinput">figure;
+
+n1 = -3:3;
+x1 = [-9 -6 -3 0 3 6 9];
+
+n2 = -2:2;
+x2 = [4 2 0 2 4];
+
+convdisc([n1;x1],[n2;x2]);
+</pre><img vspace="5" hspace="5" src="Part1PR04_03.png" alt=""> <img vspace="5" hspace="5" src="Part1PR04_04.png" alt=""> <h2>Correlaci&oacute;n discreta Lathi 3.1.1<a name="23"></a></h2><p>A continuaci&oacute;n se analiza el problema 3.1.1 Se realiza la correlaci&oacute;n de dos se&ntilde;ales discretas.</p><p><img vspace="5" hspace="5" src="eqd.PNG" alt=""> </p><pre>Conocemos la propiedad de la convoluci&oacute;n discreta para resolver correlaciones,
+y tenemos una funci&oacute;n que nos ayuda a resolver convoluciones discretas, as&iacute; que
+podemos resolver el problema por la siguente ecuaci&oacute;n:</pre><p><img vspace="5" hspace="5" src="corrd.PNG" alt=""> </p><pre class="codeinput">figure
+
+n1 = -3:3;
+x1 = [-9 -6 -3 0 3 6 9];
+
+n2 = -2:2;
+x2 = [4 2 0 2 4];
+
+convdisc([n1;x1],[n2;x2]);
+</pre><img vspace="5" hspace="5" src="Part1PR04_05.png" alt=""> <img vspace="5" hspace="5" src="Part1PR04_06.png" alt=""> <pre>Como podemos observar, la inversi&oacute;n de la se&ntilde;al x2[n] es la misma se&ntilde;al
+x2[n],por lo que, en este caso, el resultado es igual a la convoluci&oacute;n.</pre><h2>Convoluci&oacute;n con CONV de Matlab.<a name="28"></a></h2><p>A continuaci&oacute;n se analiza el problema 3.1.1 Se realiza la convoluci&oacute;n de dos se&ntilde;ales discretas con la funci&oacute;n "conv(f,g)".</p><p><img vspace="5" hspace="5" src="eqd.PNG" alt=""> </p><pre>La funci&oacute;n conv comienza a realizar la convoluci&oacute;n de la se&ntilde;ales tomando
+como su inicio un n=0, por lo que para compensar este cambio, hay que
+retrasar o adelantar el resultado utilizando la propiedad:</pre><p><img vspace="5" hspace="5" src="convp.PNG" alt=""> </p><pre>En este caso, x1 se atrasa 3 unidades y x2 2 unidades, por lo que el
+retraso total en la convoluci&oacute;n ser&iacute;a de 5 unidades.</pre><pre>El retraso total se aplica en el vector n que dar&aacute; sentido a la gr&aacute;fica.</pre><pre class="codeinput">figure;
+x1 = [-9 -6 -3 0 3 6 9];
+x2 = [4 2 0 2 4];
+
+n = -5:5;
+
+y = conv(x1,x2);
+
+stem(n,y);
+grid <span class="string">on</span>;
+</pre><img vspace="5" hspace="5" src="Part1PR04_07.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% RPL04 Convolución y correlación de señales en tiempo continuo.
+% Caudillo Barbosa Eric
+% Olea García Bryan
+% Darío
+
+%% Introducción.
+% DESCRIPTIVE TEXT
+
+
+
+%% Resolución del PR04.
+% A continuación se analiza el problema 1. del PR04.
+% Se realiza la convolución de la señal:
+%%
+% 
+% <<ft.PNG>>
+% 
+%%
+% 
+%  con la señal:
+% 
+% 
+%%
+% 
+% <<gt.PNG>>
+% 
+%%
+% 
+%  Se muestra la gráfica de la convolución numérica con la función
+%  "convconm", se modificó con el fin de poder modificar los límites, los
+%  intervalos de integración y agregar una función para el resultado
+%  analítico.
+%  
+% 
+%%
+% 
+%  El resultado numérico se muestra con un color negro y el resultado
+%  analítico se muestra de un color rojo.
+% 
+
+
+
+clear all;
+close all;
+clc;
+
+f = @(t) exp(-t).*(t>=0 & t<=1);
+g = @(t) t.*(t>=-1 & t<=1);
+
+dtau = 5e-3;
+tau = -2:dtau:5;
+tvec = -1.5:.1:2.5;
+lims = [-1.5 1.5;-1 1];
+
+res04 = @(t) 0.*(t<-1 & t>2) + (2*exp(-t-1) + t -1).*(t>=-1 & t<0) + ...
+    ((2-t)*exp(-1) + t -1).*(t>=0 & t<1) + ((2-t)*exp(-1)).*(t>=1 & t<=2);
+
+convconm(g,f,res04,tau,dtau,tvec,lims);
+
+%%
+% 
+% <<yt.PNG>>
+% 
+
+%%
+% 
+%  Para poder notar las diferencias entre el resultado numérico y
+%  analítico, se realiza un aumento en la sección marcada.
+% 
+
+%%
+% 
+% <<am1pr04.PNG>>
+% 
+
+%%
+% 
+% <<am2pr04.PNG>>
+% 
+
+
+
+
+%% Resolución del PR05.
+% A continuación se analiza el problema e) del PR05.
+% Se realiza la autocorrelación de la señal:
+
+%%
+% 
+% <<x1t.PNG>>
+% 
+
+%%
+% 
+%  Conocemos la propiedad de la convolución para resolver correlaciones,
+%  y tenemos una función que nos ayuda a resolver convoluciones, así que
+%  podemos resolver el problema por la siguente ecuación:
+% 
+
+%%
+% 
+% <<rx1t.PNG>>
+% 
+
+%%
+% 
+%  El resultado numérico se muestra con un color negro y el resultado
+%  analítico se muestra de un color rojo.
+% 
+
+
+
+x1 = @(t) 0.*(t<0) + 1.*(t>=0) - 2.*(t>=3) + 1.*(t>=4);
+x11 = @(t) 0.*(t<0) - 1.*(t>=0) + 2.*(t>=-3) - 1.*(t>=-4);
+
+dtau = 1e-2;
+tau = -6:dtau:8;
+tvec = -5:.1:5;
+lims = [-1.5 1.5;-1.5 4.5];
+
+res05 = @(t) 0.*(t<-4 & t>4) + (-t-4).*(t>=-4 & t<=-3) + (t+2).*(t>-3 & t<=-1)...
+    + (3*t + 4).*(t>-1 & t<=0) + (-3*t + 4).*(t>0 & t<=1) + (-t + 2).*(t>1 & t<=3)...
+    + (t-4).*(t>3 & t<=4);
+
+figure;
+
+convconm(x11,x1,res05,tau,dtau,tvec,lims);
+
+%%
+% 
+% <<rx1x1.PNG>>
+% 
+
+%%
+% 
+%  Para poder notar las diferencias entre el resultado numérico y
+%  analítico, se realiza un aumento en la sección marcada.
+% 
+
+%%
+% 
+% <<am1pr05.PNG>>
+% 
+
+%%
+% 
+% <<am2pr05.PNG>>
+% 
+
+%% Convolución discreta Lathi 3.1.1
+% A continuación se analiza el problema 3.1.1
+% Se realiza la convolución de dos señales discretas.
+
+%%
+% 
+% <<eqd.PNG>>
+% 
+
+figure;
+
+n1 = -3:3;
+x1 = [-9 -6 -3 0 3 6 9];
+
+n2 = -2:2;
+x2 = [4 2 0 2 4];
+
+convdisc([n1;x1],[n2;x2]);
+
+%% Correlación discreta Lathi 3.1.1
+% A continuación se analiza el problema 3.1.1
+% Se realiza la correlación de dos señales discretas.
+
+%%
+% 
+% <<eqd.PNG>>
+% 
+
+%%
+% 
+%  Conocemos la propiedad de la convolución discreta para resolver correlaciones,
+%  y tenemos una función que nos ayuda a resolver convoluciones discretas, así que
+%  podemos resolver el problema por la siguente ecuación:
+%  
+
+%%
+% 
+% <<corrd.PNG>>
+% 
+
+figure
+
+n1 = -3:3;
+x1 = [-9 -6 -3 0 3 6 9];
+
+n2 = -2:2;
+x2 = [4 2 0 2 4];
+
+convdisc([n1;x1],[n2;x2]);
+
+%%
+% 
+%  Como podemos observar, la inversión de la señal x2[n] es la misma señal
+%  x2[n],por lo que, en este caso, el resultado es igual a la convolución.
+% 
+
+%% Convolución con CONV de Matlab.
+% A continuación se analiza el problema 3.1.1
+% Se realiza la convolución de dos señales discretas con la función "conv(f,g)".
+
+%%
+% 
+% <<eqd.PNG>>
+% 
+
+%%
+% 
+%  La función conv comienza a realizar la convolución de la señales tomando
+%  como su inicio un n=0, por lo que para compensar este cambio, hay que
+%  retrasar o adelantar el resultado utilizando la propiedad:
+
+%%
+% 
+% <<convp.PNG>>
+% 
+
+%%
+% 
+%  En este caso, x1 se atrasa 3 unidades y x2 2 unidades, por lo que el
+%  retraso total en la convolución sería de 5 unidades.
+% 
+%%
+% 
+%  El retraso total se aplica en el vector n que dará sentido a la gráfica.
+% 
+
+figure;
+x1 = [-9 -6 -3 0 3 6 9];
+x2 = [4 2 0 2 4];
+
+n = -5:5;
+
+y = conv(x1,x2);
+
+stem(n,y);
+grid on;
+
+##### SOURCE END #####
+--></body></html>
